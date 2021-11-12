@@ -1,3 +1,10 @@
+def main():
+    lista = Lista()
+    lista.append(Node(150))
+    lista.add(Node(40))
+    print(lista)
+
+
 
 class Node:
 
@@ -21,13 +28,17 @@ class Lista:
         :return:
         """
         if self.init is None:
-            self.init = node
-            self.tail = node
-            return
-
-        self.tail.next = node
-        node.prev = self.tail
-
+            new_node = Node(node)
+            new_node.prev = None;
+            self.init = new_node
+        else: 
+            new_node = Node(node)
+            last = self.init
+            while last.next:
+                last = last.next
+            last.next = new_node
+            new_node.prev = last
+            new_node.next = None
 
     def add(self, node):
         """
@@ -37,12 +48,15 @@ class Lista:
         :return:
         """
         if self.init is None:
-            self.init = node
-            self.tail = node
-            return
-
-        node.next = self.init
-        self.init = node
+            new_node = Node(node)
+            new_node.prev = None
+            self.init = new_node
+        else: 
+            new_node = Node(node)
+            self.init.prev = new_node
+            new_node.next = self.init
+            self.init = new_node
+            new_node.prev = None
 
     def __str__(self):
         str_aux = '['
